@@ -20,8 +20,8 @@
 
 /* USB Device descriptor parameter */
 
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x6060
+#define VENDOR_ID       0x4D44 //MD
+#define PRODUCT_ID      0x5257 //RW
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Mattia Dal Ben
 #define PRODUCT         Redox_wireless
@@ -38,12 +38,6 @@
 //#define BACKLIGHT_LEVELS 3
 
 #define ONESHOT_TIMEOUT 500
-
-
-/* key combination for command */
-#define IS_COMMAND() ( \
-    keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
-)
 
 /*
  * Feature disable options

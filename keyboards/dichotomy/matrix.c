@@ -92,9 +92,6 @@ uint8_t matrix_cols(void) {
 }
 
 void matrix_init(void) {
-    DDRF |= (1<<6);
-    DDRF |= (1<<5);
-    DDRD |= (1<<1);
     matrix_init_quantum();
 }
 
@@ -198,7 +195,7 @@ uint8_t matrix_scan(void)
 inline
 bool matrix_is_on(uint8_t row, uint8_t col)
 {
-    return (matrix[row] & ((matrix_row_t)1<col));
+    return (matrix[row] & ((matrix_row_t)1<<col));
 }
 
 inline
