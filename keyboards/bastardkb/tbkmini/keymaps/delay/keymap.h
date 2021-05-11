@@ -3,15 +3,16 @@
 #include QMK_KEYBOARD_H
 
 enum layer_names {
-    L_DVORAK,
-    L_NUM,
-    L_SYM,
-    L_NAV,
-    L_MEDIA,
-    L_RGB,
+    BASE,
+    NAVR,
+    DEVR,
+    MEDR,
+    NUMR,
+    SYMR,
+    FUNR,
 };
 
-// home row mods
+// Home row mods.
 #define C_ALT_A LALT_T(KC_A)
 #define C_CTL_E LCTL_T(KC_E)
 #define C_GUI_O LGUI_T(KC_O)
@@ -27,11 +28,19 @@ enum layer_names {
 #define C_LAN_P KC_F18
 #define C_LAN_N KC_F19
 
-// layers
-#define C_TAB_1 LT(1, KC_TAB)
-#define C_SPC_2 LT(2, KC_SPC)
-#define C_BSP_3 LT(3, KC_BSPC)
-#define C_ESC_4 LT(4, KC_ESC)
+// Layers.
+#define TAB_NAV LT(NAVR, KC_TAB)
+#define BSP_DEV LT(DEVR, KC_BSPC)
+#define ESC_MED LT(MEDR, KC_ESC)
+#define SPC_NUM LT(NUMR, KC_SPC)
+#define ENT_SYM LT(SYMR, KC_ENT)
 
-// tap dances
+// Tap dances.
 #define C_OSSFT OSM(MOD_LSFT)
+
+// Custom NAVR, for Apple macOS.
+#define U_UNDO  LCMD(KC_Z)
+#define U_REDO  SCMD(KC_Z)
+#define U_CUT   LCMD(KC_X)
+#define U_COPY  LCMD(KC_C)
+#define U_PASTE LCMD(KC_V)

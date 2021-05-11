@@ -48,7 +48,9 @@
  * Send the tap anyway, even after TAPPING_TERM, if there was no other key
  * interruption between press and release.  Only enable for specific keys.
  */
+#if 0
 #define RETRO_TAPPING_PER_KEY
+#endif
 
 /**
  * Disable auto-repeat when pressing key twice.
