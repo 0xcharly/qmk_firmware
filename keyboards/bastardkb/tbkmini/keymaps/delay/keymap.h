@@ -13,15 +13,15 @@ enum layer_names {
 };
 
 // Home row mods.
-#define C_ALT_A LALT_T(KC_A)
+#define C_GUI_A LGUI_T(KC_A)
+#define C_ALT_O LALT_T(KC_O)
 #define C_CTL_E LCTL_T(KC_E)
-#define C_GUI_O LGUI_T(KC_O)
 #define C_SFT_U LSFT_T(KC_U)
 
 #define C_SFT_H RSFT_T(KC_H)
-#define C_GUI_N RGUI_T(KC_N)
 #define C_CTL_T RCTL_T(KC_T)
-#define C_ALT_S LALT_T(KC_S)
+#define C_ALT_N LALT_T(KC_N)
+#define C_GUI_S RGUI_T(KC_S)
 
 #define C_SCR_L LGUI(KC_LEFT)
 #define C_SCR_R LGUI(KC_RIGHT)

@@ -37,18 +37,20 @@
  * If you have a lot of accidental mod activations, crank up the tapping term.
  * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
-#define TAPPING_TERM 220
+#define TAPPING_TERM 175
 
+#if 0
 /**
  * Customize the TAPPING_TERM for specific keys.
  */
 #define TAPPING_TERM_PER_KEY
+#endif
 
+#if 0
 /**
  * Send the tap anyway, even after TAPPING_TERM, if there was no other key
  * interruption between press and release.  Only enable for specific keys.
  */
-#if 0
 #define RETRO_TAPPING_PER_KEY
 #endif
 
