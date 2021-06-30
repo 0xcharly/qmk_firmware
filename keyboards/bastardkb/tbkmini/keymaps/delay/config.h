@@ -15,7 +15,19 @@
 /**
  * Limit maximum brightness to keep power consumption reasonable, and avoid disconnects.
  */
-#define RGBLIGHT_LIMIT_VAL 180
+#undef RGBLIGHT_LIMIT_VAL
+#define RGBLIGHT_LIMIT_VAL 32
+
+/**
+ * Default RGB mode to use: relaxing mode.
+ */
+// Unload all animations but the rainbow swirl, reduces memory footprint.
+#undef RGBLIGHT_ANIMATIONS
+#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+
+#define RGBLIGHT_DEFAULT_SPD 0
+#define RGBLIGHT_DEFAULT_MODE RGBLIGHT_MODE_RAINBOW_SWIRL
+#define RGBLIGHT_EFFECT 4
 
 /* One-Shot keys. */
 

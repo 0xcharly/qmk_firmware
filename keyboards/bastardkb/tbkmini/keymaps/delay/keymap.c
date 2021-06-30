@@ -29,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [NAVR] = LAYOUT_split_3x6_3(
   // ╭─────────────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       XXXXXXX,   RESET, U_PASTE,  U_COPY,   U_CUT, XXXXXXX,   XXXXXXX,   U_CUT,  U_COPY, U_PASTE, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, U_PASTE,  U_COPY,   U_CUT, XXXXXXX,   XXXXXXX,   U_CUT,  U_COPY, U_PASTE, XXXXXXX, XXXXXXX,
   // |--------+--------+--------+--------+--------|--------| |--------+--------+--------+--------+--------+--------|
        XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,   XXXXXXX, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [NUMR] = LAYOUT_split_3x6_3(
   // ╭─────────────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       XXXXXXX, KC_PEQL,    KC_7,    KC_8,    KC_9, KC_PERC,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET, XXXXXXX,
+       XXXXXXX, KC_PEQL,    KC_7,    KC_8,    KC_9, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
        XXXXXXX, KC_PMNS,    KC_4,    KC_5,    KC_6, KC_PPLS,   XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -53,70 +53,85 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [SYMR] = LAYOUT_split_3x6_3(
   // ╭─────────────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       XXXXXXX, C_GRAVE,   KC_LT, C_SLASH,   KC_GT, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET, XXXXXXX,
+       XXXXXXX, C_GRAVE,   KC_LT, C_SLASH,   KC_GT, KC_PERC,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET, EEP_RST,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
        XXXXXXX, KC_COLN,  C_LBRC, KC_UNDS,  C_RBRC, XXXXXXX,   XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
-       XXXXXXX, KC_PERC, KC_EXLM,   KC_AT, KC_HASH, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, XXXXXXX, KC_EXLM,   KC_AT, KC_HASH, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ╰─────────────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
                                   KC_BSPC, KC_MINS, XXXXXXX,   XXXXXXX, XXXXXXX, ENT_SYM
   //                            ╰──────────────────────────╯ ╰──────────────────────────╯
   ),
 };
 
+#ifndef NO_SHIFT_CODE
+#define NO_SHIFT_CODE(keycode) \
+{ \
+  if (record->event.pressed) { \
+    if (get_mods() & MOD_MASK_SHIFT) { \
+      const uint8_t mods = get_mods() & MOD_MASK_SHIFT; \
+      del_mods(mods); \
+      register_code(keycode); \
+      add_mods(mods); \
+    } else { \
+      register_code(keycode); \
+    } \
+  } \
+  break; \
+}
+#endif // NO_SHIFT_CODE
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case C_BSLSH: {
-      if (record->event.pressed) {
-        register_code(KC_BSLASH);
-      }
-      break;
-    }
-    case C_COMMA: {
-      if (record->event.pressed) {
-        register_code(KC_COMMA);
-      }
-      break;
-    }
-    case C_DOT: {
-      if (record->event.pressed) {
-        register_code(KC_DOT);
-      }
-      break;
-    }
-    case C_GRAVE: {
-      if (record->event.pressed) {
-        register_code(KC_GRAVE);
-      }
-      break;
-    }
-    case C_LBRC: {
-      if (record->event.pressed) {
-        register_code(KC_LBRC);
-      }
-      break;
-    }
-    case C_RBRC: {
-      if (record->event.pressed) {
-        register_code(KC_RBRC);
-      }
-      break;
-    }
-    case C_SCLN: {
-      if (record->event.pressed) {
-        register_code(KC_SCOLON);
-      }
-      break;
-    }
-    case C_SLASH: {
-      if (record->event.pressed) {
-        register_code(KC_SLASH);
-      }
-      break;
-    }
+    case C_BSLSH:
+      NO_SHIFT_CODE(KC_BSLASH);
+    case C_COMMA:
+      NO_SHIFT_CODE(KC_COMMA);
+    case C_DOT:
+      NO_SHIFT_CODE(KC_DOT);
+    case C_GRAVE:
+      NO_SHIFT_CODE(KC_GRAVE);
+    case C_LBRC:
+      NO_SHIFT_CODE(KC_LBRC);
+    case C_RBRC:
+      NO_SHIFT_CODE(KC_RBRC);
+    case C_SCLN:
+      NO_SHIFT_CODE(KC_SCOLON);
+    case C_SLASH:
+      NO_SHIFT_CODE(KC_SLASH);
   }
   return true;
 };
+
+#ifndef UNREGISTER_CODE_IF_PRESSED
+#define UNREGISTER_CODE_IF_PRESSED(keycode) { \
+  if (!record->event.pressed) { \
+    unregister_code(keycode); \
+  } \
+  break; \
+}
+#endif // UNREGISTER_CODE_IF_PRESSED
+
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case C_BSLSH:
+      UNREGISTER_CODE_IF_PRESSED(KC_BSLASH);
+    case C_COMMA:
+      UNREGISTER_CODE_IF_PRESSED(KC_COMMA);
+    case C_DOT:
+      UNREGISTER_CODE_IF_PRESSED(KC_DOT);
+    case C_GRAVE:
+      UNREGISTER_CODE_IF_PRESSED(KC_GRAVE);
+    case C_LBRC:
+      UNREGISTER_CODE_IF_PRESSED(KC_LBRC);
+    case C_RBRC:
+      UNREGISTER_CODE_IF_PRESSED(KC_RBRC);
+    case C_SCLN:
+      UNREGISTER_CODE_IF_PRESSED(KC_SCOLON);
+    case C_SLASH:
+      UNREGISTER_CODE_IF_PRESSED(KC_SLASH);
+  }
+}
 
 #if 0
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -136,9 +151,3 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
   return keycode != C_OSSFT;
 }
-
-#if 0
-bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
-  return keycode == SPC_NUM;
-}
-#endif
