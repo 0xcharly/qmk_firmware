@@ -18,6 +18,7 @@ enum custom_keycodes {
   C_GRAVE,
   C_LBRC,
   C_RBRC,
+  C_RESET,
   C_SCLN,
   C_SLASH,
 };

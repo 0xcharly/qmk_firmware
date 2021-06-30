@@ -17,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [DEVR] = LAYOUT_split_3x6_3(
   // ╭─────────────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       XXXXXXX,   RESET, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, KC_LCBR, KC_AMPR, KC_RCBR, KC_PIPE, XXXXXXX,
+       XXXXXXX, C_RESET, EEP_RST, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, KC_LCBR, KC_AMPR, KC_RCBR, KC_PIPE, XXXXXXX,
   // |--------+--------+--------+--------+--------|--------| |--------+--------+--------+--------+--------+--------|
        XXXXXXX, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,   KC_CIRC, KC_LPRN, KC_ASTR, KC_RPRN,  KC_DLR, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [SYMR] = LAYOUT_split_3x6_3(
   // ╭─────────────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       XXXXXXX, C_GRAVE,   KC_LT, C_SLASH,   KC_GT, KC_PERC,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET, EEP_RST,
+       XXXXXXX, C_GRAVE,   KC_LT, C_SLASH,   KC_GT, KC_PERC,   XXXXXXX, XXXXXXX, XXXXXXX, EEP_RST, C_RESET, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
        XXXXXXX, KC_COLN,  C_LBRC, KC_UNDS,  C_RBRC, XXXXXXX,   XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX,
   // |--------+--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------+--------|
@@ -95,6 +95,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       NO_SHIFT_CODE(KC_LBRC);
     case C_RBRC:
       NO_SHIFT_CODE(KC_RBRC);
+    case C_RESET: {
+      rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+      rgblight_sethsv_noeeprom(0, 255, RGBLIGHT_LIMIT_VAL);
+      reset_keyboard();
+      break;
+    }
     case C_SCLN:
       NO_SHIFT_CODE(KC_SCOLON);
     case C_SLASH:
@@ -133,6 +139,15 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 }
 
+void oneshot_locked_mods_changed_user(uint8_t mods) {
+  if (mods & MOD_MASK_SHIFT) {
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+    rgblight_sethsv_noeeprom(155, 80, RGBLIGHT_LIMIT_VAL);
+  } else if (!mods) {
+    rgblight_reload_from_eeprom(); // Load default mode.
+  }
+}
+
 #if 0
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -150,4 +165,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
   return keycode != C_OSSFT;
+}
+
+#if 0
+void keyboard_post_init_user(void) {
+}
+#endif
+
+void eeconfig_init_user(void) {
+  rgblight_mode(RGBLIGHT_DEFAULT_MODE);
+  rgblight_set_speed(RGBLIGHT_DEFAULT_SPD);
 }
