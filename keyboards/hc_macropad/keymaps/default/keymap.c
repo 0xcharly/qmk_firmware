@@ -21,8 +21,14 @@
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT(
   // ╭──────────────────────────────────────────────────────╮╭─────────╮
-       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,      KC_1
+       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,      KC_G
   // ╰──────────────────────────────────────────────────────╯╰─────────╯
   ),
 };
 // clang-format on
+
+#ifdef ENCODER_MAP_ENABLE
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [0] = { ENCODER_CCW_CW(KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP) }
+};
+#endif  // ENCODER_MAP_ENABLE
