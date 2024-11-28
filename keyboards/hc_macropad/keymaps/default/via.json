@@ -1,0 +1,23 @@
+{
+    "name": "UFE Macropad",
+    "vendorId": "0x0001",
+    "productId": "0x9009",
+    "menus": [ "qmk_rgb_matrix" ],
+    "matrix": { "rows": 3, "cols": 4 },
+    "layouts": {
+        "keymap": [
+                [
+                  "0,2",
+                  "0,1",
+                  "0,0",
+                  "1,2",
+                  "1,1",
+                  "1,0",
+                  {
+                    "x": 0.25
+                  },
+                  "2,3\n\n\n\n\n\n\n\n\ne0"
+                ]
+        ]
+    }
+}
